@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.security.SecureRandom;
 
 @Entity
 @Table(name="Collaborateur")
@@ -17,17 +19,6 @@ import java.util.Set;
 @Setter
 public class Collaborateur {
     @Id
-    @SequenceGenerator(
-            name = "collaborateurs_sequence",
-            sequenceName = "collaborateurs_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "collaborateurs_sequence"
-    )
-
-
     private int matricule;
     private String nom;
     private String prenom;
@@ -43,7 +34,7 @@ public class Collaborateur {
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     @Transient
-    private int bap = 5;
+    private int bap;
     private LocalDate depart;
     private boolean ancienCollab;
     private boolean seminaire;
@@ -59,6 +50,13 @@ public class Collaborateur {
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     private Set<Diplome> diplomes = new HashSet<>();
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    @Transient
+    SecureRandom sr = new SecureRandom();
+    public Collaborateur() throws NoSuchAlgorithmException {
+        this.matricule = sr.nextInt();
+    }
 
     public int getBap() {
         return embauche.getDayOfMonth()>= 15 ? embauche.getMonthValue()+1 :embauche.getMonthValue() ;
