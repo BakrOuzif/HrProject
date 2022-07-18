@@ -21,11 +21,11 @@ public class Diplome {
             generator = "diplomes_sequence"
     )
     private int diplomeID;
-    private String diplome;
+    private String niveau;
     private String typeDiplome;
     private String ecole;
     private String typeEcole;
-    private int promotion;
+    private String promotion;
 
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name="matricule", nullable = false)

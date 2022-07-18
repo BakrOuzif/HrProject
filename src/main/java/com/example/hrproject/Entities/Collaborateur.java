@@ -29,18 +29,19 @@ public class Collaborateur {
     private String ancienRH;
     private String nouveauRH;
     private String site;
+    private char sexe;
     private String bu;
-    private LocalDate embauche;
+    private String embauche;
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     @Transient
     private int bap;
-    private LocalDate depart;
+    private String depart;
     private boolean ancienCollab;
     private boolean seminaire;
-    private LocalDate dateSeminaire;
-    private String app;
+    private String dateSeminaire;
     private  String poste;
+    private  String posteAPP;
     private double salaire;
     @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL)
     @Getter(value = AccessLevel.NONE)
@@ -58,9 +59,9 @@ public class Collaborateur {
         this.matricule = sr.nextInt();
     }
 
-    public int getBap() {
-        return embauche.getDayOfMonth()>= 15 ? embauche.getMonthValue()+1 :embauche.getMonthValue() ;
-    }
+//    public int getBap() {
+//        return embauche.getDayOfMonth()>= 15 ? embauche.getMonthValue()+1 :embauche.getMonthValue() ;
+//    }
 
     public void setBap(int bap) {
         this.bap = bap;
