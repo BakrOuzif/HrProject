@@ -1,9 +1,11 @@
 package com.example.hrproject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -25,7 +27,8 @@ public class Diplome {
     private String typeDiplome;
     private String ecole;
     private String typeEcole;
-    private String promotion;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate promotion;
 
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name="matricule", nullable = false)

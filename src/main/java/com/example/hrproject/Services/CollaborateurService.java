@@ -8,9 +8,12 @@ import com.example.hrproject.Repositories.CompetenceRepository;
 import com.example.hrproject.Repositories.DiplomeRepository;
 import com.example.hrproject.modals.CollabDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 public class CollaborateurService {
@@ -32,6 +35,7 @@ public class CollaborateurService {
     public List<Competence> getComptences(int matricule) {
         return competenceRepository.findAllByCollaborateur_Matricule(matricule);
     }
+
     @Autowired
     public CollaborateurService(CollaborateurRepository collaborateursRepository, DiplomeRepository diplomeRepository, CompetenceRepository competenceRepository) {
         this.collaborateursRepository = collaborateursRepository;
@@ -39,12 +43,27 @@ public class CollaborateurService {
         this.competenceRepository = competenceRepository;
     }
 
-    public void saveCollab(CollabDTO newest){
+    public void saveCollab(CollabDTO newest) {
         Collaborateur collab = newest.getCollab();
         collab.addDiplomes(newest.getDiplomes());
         collab.addCompetences(newest.getCompetences());
         collaborateursRepository.save(newest.getCollab());
         System.out.println("Saved :) ");
     }
+
+    @Autowired
+    public JavaMailSender emailSender;
+    public String sendmail() {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo("afarhane321@gmail.com");
+        message.setSubject("Test Simple Email");
+        message.setText("Hello, Im testing Simple Email");
+
+        this.emailSender.send(message);
+
+        return "Email Sent!";
+    }
+
 }
 

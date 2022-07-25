@@ -5,7 +5,6 @@ import com.example.hrproject.Services.CollaborateurService;
 import com.example.hrproject.modals.CollabDTO;
 import com.example.hrproject.modals.Status;
 import com.example.hrproject.modals.StatusDTO;
-import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,8 @@ public class CollaborateurController {
     public String saveCollab (@RequestBody CollabDTO collabDTO){
         System.out.println(collabDTO);
         collaborateursService.saveCollab(collabDTO);
+
+//        System.out.println(collaborateursService.sendmail());
         return new StatusDTO(Status.Saved).getStatus();
     }
 

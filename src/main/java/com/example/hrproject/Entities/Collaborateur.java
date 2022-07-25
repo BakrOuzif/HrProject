@@ -1,5 +1,6 @@
 package com.example.hrproject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -20,26 +21,31 @@ import java.security.SecureRandom;
 public class Collaborateur {
     @Id
     private int matricule;
+    private int matriculeRH;
     private String nom;
     private String prenom;
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     @Transient
-    private String abrev ="Sdq";
+    private String abrev;
     private String ancienRH;
     private String nouveauRH;
     private String site;
-    private char sexe;
+    private String sexe;
     private String bu;
-    private String embauche;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate embauche;
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     @Transient
     private int bap;
-    private String depart;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate depart;
     private boolean ancienCollab;
     private boolean seminaire;
-    private String dateSeminaire;
+    private boolean active;
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private LocalDate dateSeminaire;
     private  String poste;
     private  String posteAPP;
     private double salaire;
@@ -59,9 +65,9 @@ public class Collaborateur {
         this.matricule = sr.nextInt();
     }
 
-//    public int getBap() {
-//        return embauche.getDayOfMonth()>= 15 ? embauche.getMonthValue()+1 :embauche.getMonthValue() ;
-//    }
+    public int getBap() {
+        return embauche.getDayOfMonth()>= 15 ? embauche.getMonthValue()+1 :embauche.getMonthValue() ;
+    }
 
     public void setBap(int bap) {
         this.bap = bap;

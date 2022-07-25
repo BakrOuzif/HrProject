@@ -1,8 +1,5 @@
 package com.example.hrproject.modals;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 public class StatusDTO {
     Status status;
 
