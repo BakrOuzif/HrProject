@@ -2,17 +2,16 @@ package com.example.hrproject.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.security.SecureRandom;
 
 @Entity
 @Table(name="Collaborateur")
@@ -62,7 +61,7 @@ public class Collaborateur {
     @Transient
     SecureRandom sr = new SecureRandom();
     public Collaborateur() throws NoSuchAlgorithmException {
-        this.matricule = sr.nextInt();
+        this.matricule = sr.nextInt(100000);
     }
 
     public int getBap() {
