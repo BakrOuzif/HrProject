@@ -1,17 +1,12 @@
-import './CollabAddPage.css';
+import './CollabPage.css';
 
 import {SideBar, Header, AddCollab} from './Containers'
 
-function CollabListPage() {
-  return (
-    <div className="CollabAddPage">
-        <SideBar/>
-        <div className="CollabAddPage__stretch">
-            <Header/>
-            <AddCollab/>
-        </div>
-    </div>
-  );
+function CollabAddPage() {
+    return (
+        <AddCollab/>
+
+    );
 }
 
-export default CollabListPage;
+export default CollabAddPage;

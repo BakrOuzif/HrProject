@@ -125,8 +125,11 @@ const AddCollab = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="sexe">Sexe</label>
-                                    <input type="text" name="sexe" id="sexe" value={collab.sexe}
-                                           onChange={handleChangeCollab} placeholder="Sexe"/>
+                                    <select name="sexe" id="sexe"  placeholder="Sexe">
+                                        <option defaultValue value="Homme">Homme </option>
+                                        <option value="Femme">Femme </option>
+                                        <option value="autre">Pas Précisé </option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label htmlFor="salaire">Salaire</label>
@@ -140,19 +143,21 @@ const AddCollab = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="embauche">Date Embauche</label>
-                                    <input type="text" name="embauche" id="embauche" value={collab.embauche}
-                                           onChange={handleChangeCollab} placeholder="dd - mm - yyyy"/>
+                                    <input type="date" name="embauche" id="embauche" value={collab.embauche}
+                                           onChange={handleChangeCollab}/>
                                 </div>
                                 <div>
                                     <label htmlFor="seminaire">Participe au Séminaire</label>
-                                    <input type="text" name="seminaire" id="seminaire" value={collab.seminaire}
-                                           onChange={handleChangeCollab} placeholder="V ou F"/>
+                                    <select name="seminaire" id="seminaire"  placeholder="V ou F">
+                                        <option defaultValue value="1">Vrai </option>
+                                        <option value="0">Faux </option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label htmlFor="dateSeminaire">Date de participation</label>
-                                    <input type="text" name="dateSeminaire" id="dateSeminaire"
+                                    <input type="date" name="dateSeminaire" id="dateSeminaire"
                                            value={collab.dateSeminaire}
-                                           onChange={handleChangeCollab} placeholder="dd - mm - yyyy"/>
+                                           onChange={handleChangeCollab}/>
                                 </div>
                                 <div>
                                     <label htmlFor="poste">Poste APP</label>
@@ -198,18 +203,21 @@ const AddCollab = () => {
                                     </div>
                                     <div>
                                         <label htmlFor="typeEcole">Type &#201;cole</label>
-                                        <input type="text" id="typeEcole" name="typeEcole"
-                                               placeholder="Type &#201;cole"/>
+                                        <select name="typeEcole" id="typeEcole">
+                                            <option value="nationale">Nationale</option>
+                                            <option value="internationale">Internationale</option>
+                                        </select>
                                     </div>
                                     <div>
                                         <label htmlFor="typeDiplome">Type Diplome</label>
-                                        <input type="text" id="typeDiplome" name="typeDiplome"
-                                               placeholder="Type Diplome"/>
+                                        <select name="typeDiplome" id="typeDiplome">
+                                            <option value="étatique">&Eacute;tatique</option>
+                                            <option value="privé">Privé</option>
+                                        </select>
                                     </div>
                                     <div>
                                         <label htmlFor="promotion">Promotion</label>
-                                        <input type="text" id="promotion" name="promotion"
-                                               placeholder="dd - mm - yyyy"/>
+                                        <input type="date" id="promotion" name="promotion" placeholder="dd-mm-yyyy"/>
                                     </div>
                                 </div>
                             </div>

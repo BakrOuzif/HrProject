@@ -56,8 +56,10 @@
     align-self: center;
 
 }
-
-.tlrh__adding_content-container input, .tlrh__adding_content-diplomes input {
+select{
+    height: 100% !important;
+}
+.tlrh__adding_content-container input, .tlrh__adding_content-diplomes input,.tlrh__adding_content-diplomes select,.tlrh__adding_content-container select {
     padding: 10px 10px;
     height: 30px;
     background: #FFFFFF;

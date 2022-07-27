@@ -14,7 +14,7 @@ body {
     sans-serif;
     --secondary-text-color: #FFE5B4;
     --primary-text-color: #E8AA42;
-    --primary-color: #1F4690;
+    --primary-color: #2b458e;
     --secondary-color: #231955;
 
 
@@ -26,11 +26,16 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-html, body {
-    height: 100%;
-    width: 100%;
+html, body{
+    padding: 0;
+    margin: 0;
 }
-
+html{
+    height: 100%;
+}
+body{
+    min-height: 100%;
+}
 /*Animations*/
 
 /**

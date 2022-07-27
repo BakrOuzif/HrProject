@@ -7,6 +7,7 @@
 .tlrh__list hr {
     border: 1px solid #E5E5E5;
 }
+
 .tlrh__list_header h2 {
     font-weight: 700;
     font-size: 22px;
@@ -14,12 +15,12 @@
     color: var(--primary-text-color);
 }
 
-.tlrh__list_header-right button a{
+.tlrh__list_header-right button a {
     text-decoration: none;
     color: var(--secondary-text-color);
 }
 
-.tlrh__list_header-right button{
+.tlrh__list_header-right button {
     background: var(--primary-color);
     border-radius: 4px;
     width: 200px;
@@ -40,19 +41,20 @@
     color: #231955;
 }
 
-.tlrh__list-thead{
+.tlrh__list-tbody  p, .tlrh__list-thead  p {
+    width: 10%;
+}
+.tlrh__list-thead {
     display: flex;
-    padding: 0 4rem 0 12%;
+    margin: 0 270px 0 10% ;
     justify-content: space-evenly;
     color: var(--secondary-text-color);
     font-weight: 600;
     font-size: 12px;
     line-height: 15px;
 }
-.tlrh__list p{
-    width: 11%;
-}
-.tlrh__list-tbody_icons svg{
+
+.tlrh__list-tbody_icons svg {
     margin-right: 10px;
     color: var(--primary-text-color);
 }
