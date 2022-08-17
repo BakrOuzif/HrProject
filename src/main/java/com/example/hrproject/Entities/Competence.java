@@ -1,5 +1,6 @@
 package com.example.hrproject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,6 +24,12 @@ public class Competence {
     private String name;
     private int note;
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "matricule", nullable = false)
     private Collaborateur collaborateur;
+
+    @PreRemove
+    public void removeCollab() {
+        this.collaborateur = null;
+    }
 }

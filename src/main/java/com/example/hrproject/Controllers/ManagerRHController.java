@@ -34,6 +34,7 @@ public class ManagerRHController {
 
     @PostMapping("/saveManager")
     public String saveManager (@RequestBody MatriculeRHDTO matricule){
+        System.out.println(matricule.toString());
         managerRhService.saveCollabManager(matricule.getMatricule(), matricule.getMatriculeRH());
         return new StatusDTO(Status.Modified).getStatus();
     }

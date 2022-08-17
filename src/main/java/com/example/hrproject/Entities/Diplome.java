@@ -1,11 +1,13 @@
 package com.example.hrproject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,7 +33,13 @@ public class Diplome {
     private LocalDate promotion;
 
     @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name="matricule", nullable = false)
     private Collaborateur collaborateur;
+
+    @PreRemove
+    public void removeCollab() {
+        this.collaborateur = null;
+    }
 
 }

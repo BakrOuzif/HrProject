@@ -1,6 +1,7 @@
 package com.example.hrproject.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +10,8 @@ import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="Collaborateur")
@@ -42,26 +42,30 @@ public class Collaborateur {
     private LocalDate depart;
     private boolean ancienCollab;
     private boolean seminaire;
-    private boolean active;
     @JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate dateSeminaire;
     private  String poste;
     private  String posteAPP;
     private double salaire;
-    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL)
-    @Getter(value = AccessLevel.NONE)
+    private boolean compteActif;
+    private boolean statusActif;
+    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL, orphanRemoval=true)
+    @JsonManagedReference
     @Setter(value = AccessLevel.NONE)
-    private Set<Competence> competences = new HashSet<>();
-    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL)
-    @Getter(value = AccessLevel.NONE)
+    private List<Competence> competences = new ArrayList<>();
+    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL, orphanRemoval=true)
+    @JsonManagedReference
     @Setter(value = AccessLevel.NONE)
-    private Set<Diplome> diplomes = new HashSet<>();
+    private List<Diplome> diplomes = new ArrayList<>();
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     @Transient
     SecureRandom sr = new SecureRandom();
+
     public Collaborateur() throws NoSuchAlgorithmException {
         this.matricule = sr.nextInt(100000);
+        this.compteActif = true;
+        this.statusActif = true;
     }
 
     public int getBap() {
@@ -77,12 +81,6 @@ public class Collaborateur {
             competences.add(com);
         }
     }
-    public void removeCompetence(List<Competence> competences1){
-        for(Competence com : competences1) {
-            com.setCollaborateur(null);
-            competences.remove(com);
-        }
-    }
     public void addDiplomes(List<Diplome> diplomes1){
         System.out.println(diplomes1.size());
         for(Diplome dip : diplomes1){
@@ -90,16 +88,21 @@ public class Collaborateur {
             diplomes.add(dip);
         }
     }
-    public void removeDiplome(List<Diplome> diplomes1){
-        for(Diplome dip : diplomes1) {
-            dip.setCollaborateur(null);
-            diplomes.remove(dip);
-        }
+
+    public void removeCompetences() {
+        this.competences.forEach(Competence::removeCollab);
+        this.competences.clear();
     }
+    public void removeDiplomes() {
+        this.diplomes.forEach(Diplome::removeCollab);
+        this.diplomes.clear();
+    }
+
     public String getAbrev() {
         return prenom.charAt(0)+nom.substring(0,2);
     }
     public void setAbrev(String abrev) {
         this.abrev = abrev;
     }
+
 }

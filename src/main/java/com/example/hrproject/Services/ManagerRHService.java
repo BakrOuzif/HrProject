@@ -33,8 +33,9 @@ public class ManagerRHService {
 
     public void saveCollabManager(int matricule, int matriculeRH) {
         Collaborateur collab = collaborateursRepository.findByMatricule(matricule);
+        Collaborateur manager = collaborateursRepository.findByMatricule(matriculeRH);
         collab.setMatriculeRH(matriculeRH);
-        collab.setNouveauRH(collab.getNom()+"  "+collab.getPrenom() );
+        collab.setNouveauRH(manager.getNom()+"  "+manager.getPrenom());
         collaborateursRepository.save(collab);
     }
 }
