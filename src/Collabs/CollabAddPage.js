@@ -1,8 +1,6 @@
-import './CollabPage.css';
+import {AddCollab} from './Containers'
 
-import {SideBar, Header, AddCollab} from './Containers'
-
-function CollabAddPage() {
+function CollabAddPage(props) {
     return (
         <AddCollab/>
 

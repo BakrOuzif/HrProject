@@ -1,19 +1,21 @@
-import React, {useEffect} from 'react';
-import {GrUserWorker, GrUserManager} from 'react-icons/gr'
+import React, {useState} from 'react';
+import {GrUserManager, GrUserWorker} from 'react-icons/gr'
 import {AiOutlineHome} from 'react-icons/ai'
 import {FiLogOut} from 'react-icons/fi'
+import {Link, useHistory} from 'react-router-dom'
 import {HiOutlineDocumentReport} from 'react-icons/hi'
-
-import {Link} from 'react-router-dom'
 import {Profile} from '../../../assets'
 import './sidebar.css';
-import {useState} from "react";
 
 const Sidebar = () => {
     const [actif, setActif] = useState(1);
+    const history = useHistory();
+
+    const routes = ["/", "/", "manager", "/reports"]
 
     const onClickF = (ac)=>{
         setActif(ac)
+        history.push(routes[ac -1])
     }
     return (
         <div className="tlrh__sidebar">

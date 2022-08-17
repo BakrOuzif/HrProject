@@ -10,6 +10,7 @@ const Tbody = (props) => {
     const [collabsExists, setCollabsExists] = useState(false);
     const [manager, setManager] = useState([]);
     const [managerExists, setManagerExists] = useState(false);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     useEffect(() => {
         if (collabsExists === false) {
@@ -18,6 +19,7 @@ const Tbody = (props) => {
         if (managerExists) {
             addManager();
         }
+
     })
 
 
@@ -45,7 +47,7 @@ const Tbody = (props) => {
             })
         };
         console.log(manager)
-        const response = await fetch('http://localhost:8080/saveManager', requestOptions).then(response => response.json())
+        await fetch('http://localhost:8080/saveManager', requestOptions).then(response => response.json())
             .then(data => console.log(data));
     }
 
@@ -77,6 +79,26 @@ const Tbody = (props) => {
         setManager(e.target.id)
         console.log("new: " + manager)
     }
+    const changeStatus = async (manager, status) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "matricule": manager,
+                "status": status,
+            })
+        };
+        console.log(manager)
+        await fetch('http://localhost:8080/saveStatus', requestOptions).then(response => response.json())
+            .then(data => console.log(data));
+    }
+    const statusOnChange = (event) => {
+        checkStatusToModifyButton(event)
+        changeStatus(event.target.getAttribute("data-matricule"), event.target.checked)
+    }
+    const checkStatusToModifyButton = (event) => {
+        document.getElementById(event.target.getAttribute("data-matricule")).disabled = !event.target.checked;
+    }
     return [
         collabs.map((collab) => {
                 return (<div className="tlrh__list-tbody">
@@ -88,12 +110,22 @@ const Tbody = (props) => {
                         <p>{collab.nouveauRH}</p>
                     </div>
                     <div className="tlrh__list-tbody_icons">
-                        <BsPencil size="25px"/>
-                        {props.id === 1 ? <button id={collab.matricule} className="tlrh__list-tbody_icons_buttonAdd"
-                                                  onClick={(e) => onClick(e)}>Ajouter Manager</button> :
+                        {props.id === 1 ?
                             <button id={collab.matricule} className="tlrh__list-tbody_icons_buttonAdd"
-                                    onClick={(e) => Clicked(e)}>Ajouter Collaborateurs</button>}
-                        <FiTrash2 size="25px"/>
+                                    onClick={(e) => onClick(e)}>Ajouter Manager
+                            </button> :
+                            <Fragment>
+                                <label className="toggle">
+                                    <input className="toggle-checkbox" defaultChecked={collab.statusActif}
+                                           data-matricule={collab.matricule} onChange={statusOnChange} type="checkbox"/>
+                                    <div className="toggle-switch"/>
+                                    <span className="toggle-label">Status</span>
+                                </label>
+                                        <button id={collab.matricule}  defaultChecked={collab.statusActif} className="tlrh__list-tbody_icons_buttonAdd"
+                                                onClick={(e) => Clicked(e)}>Ajouter Collaborateurs
+                                        </button>
+                            </Fragment>
+                        }
                     </div>
                 </div>)
             }
@@ -128,8 +160,8 @@ const Modal = (props) => {
     }
 
     const addManager = async () => {
+        console.log(props.matriculeRH)
         for (const matricule of matricules) {
-            console.log(matricule)
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},

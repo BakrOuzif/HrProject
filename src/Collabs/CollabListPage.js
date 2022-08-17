@@ -1,6 +1,4 @@
-import './CollabPage.css';
-
-import {SideBar, List, Header} from './Containers'
+import {List} from './Containers'
 
 function CollabListPage() {
     return (

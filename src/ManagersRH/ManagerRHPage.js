@@ -1,5 +1,3 @@
-import './ManagerPage.css';
-
 import {ListR} from './Containers'
 
 function ManagerRHPage() {
