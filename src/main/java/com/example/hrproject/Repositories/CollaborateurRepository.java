@@ -10,13 +10,16 @@ import java.util.List;
 @Repository
 public interface CollaborateurRepository extends
         JpaRepository <Collaborateur, Long> {
-        List<Collaborateur> findCollaborateurByMatriculeRH(int matricule);
-        Collaborateur findByMatricule(int matricule);
+        List<Collaborateur> findCollaborateurByMatriculeRH(Long matricule);
+        Collaborateur findByMatricule(Long matricule);
 
         @Query(value = "SELECT * FROM Collaborateur Where matricule in (SELECT DISTINCT matriculeRH FROM Collaborateur)", nativeQuery = true)
         List<Collaborateur> getManagers();
 
-        @Query(value = "SELECT * FROM Collaborateur Where matricule not in (SELECT DISTINCT matriculeRH FROM Collaborateur)", nativeQuery = true)
+        @Query(value = "SELECT * FROM Collaborateur Where matricule not in (SELECT DISTINCT matriculeRH FROM Collaborateur where matriculeRH is not null)", nativeQuery = true)
         List<Collaborateur> getCollabsNonManagers();
+
+        List<Collaborateur> getAllBySexeIs(char sexe);
+
 
 }

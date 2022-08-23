@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CollabStatusDTO {
-    int matricule;
+    Long matricule;
     boolean status;
 }

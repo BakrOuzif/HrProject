@@ -2,7 +2,6 @@ package com.example.hrproject.Controllers;
 
 import com.example.hrproject.Entities.Collaborateur;
 import com.example.hrproject.Services.ManagerRHService;
-import com.example.hrproject.modals.CollabDTO;
 import com.example.hrproject.modals.MatriculeRHDTO;
 import com.example.hrproject.modals.Status;
 import com.example.hrproject.modals.StatusDTO;

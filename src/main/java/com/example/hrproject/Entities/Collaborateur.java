@@ -19,8 +19,8 @@ import java.util.List;
 @Setter
 public class Collaborateur {
     @Id
-    private int matricule;
-    private int matriculeRH;
+    private Long matricule;
+    private Long matriculeRH;
     private String nom;
     private String prenom;
     @Getter(value = AccessLevel.NONE)
@@ -30,7 +30,7 @@ public class Collaborateur {
     private String ancienRH;
     private String nouveauRH;
     private String site;
-    private String sexe;
+    private char sexe;
     private String bu;
     @JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate embauche;
@@ -44,9 +44,18 @@ public class Collaborateur {
     private boolean seminaire;
     @JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate dateSeminaire;
-    private  String poste;
-    private  String posteAPP;
-    private double salaire;
+    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL)
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    private List<Poste> postes = new ArrayList<>();
+    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL)
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    private  List<PosteAPP>  posteAPPs = new ArrayList<>();
+    @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL, orphanRemoval=true)
+    @JsonManagedReference
+    @Setter(value = AccessLevel.NONE)
+    private List<Salaire> salaires = new ArrayList<>();
     private boolean compteActif;
     private boolean statusActif;
     @OneToMany(mappedBy = "collaborateur",cascade = CascadeType.ALL, orphanRemoval=true)
@@ -63,7 +72,7 @@ public class Collaborateur {
     SecureRandom sr = new SecureRandom();
 
     public Collaborateur() throws NoSuchAlgorithmException {
-        this.matricule = sr.nextInt(100000);
+        this.matricule = sr.nextLong(100000);
         this.compteActif = true;
         this.statusActif = true;
     }
@@ -75,6 +84,7 @@ public class Collaborateur {
     public void setBap(int bap) {
         this.bap = bap;
     }
+
     public void addCompetences(List<Competence> competences1){
         for(Competence com : competences1) {
             com.setCollaborateur(this);
@@ -97,6 +107,27 @@ public class Collaborateur {
         this.diplomes.forEach(Diplome::removeCollab);
         this.diplomes.clear();
     }
+
+    public void addSalaires(List<Salaire> salaire1) {
+        for(Salaire sal : salaire1){
+            sal.setCollaborateur(this);
+            salaires.add(sal);
+        }
+    }
+    public void addPosts(List<Poste> poste1){
+        for(Poste p : poste1){
+            p.setCollaborateur(this);
+            postes.add(p);
+        }
+    }
+    public void addPosteAPPs(List<PosteAPP> posteAPP1){
+
+        for(PosteAPP pAPP : posteAPP1){
+            pAPP.setCollaborateur(this);
+            posteAPPs.add(pAPP);
+        }
+    }
+
 
     public String getAbrev() {
         return prenom.charAt(0)+nom.substring(0,2);

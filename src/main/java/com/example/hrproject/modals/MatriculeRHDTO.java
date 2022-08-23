@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class MatriculeRHDTO {
-    int matricule;
-    int matriculeRH;
+    Long matricule;
+    Long matriculeRH;
 }

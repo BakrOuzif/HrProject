@@ -1,19 +1,15 @@
 package com.example.hrproject.Services;
 
-import com.example.hrproject.Entities.Collaborateur;
-import com.example.hrproject.Entities.Competence;
-import com.example.hrproject.Entities.Diplome;
-import com.example.hrproject.Repositories.CollaborateurRepository;
-import com.example.hrproject.Repositories.CompetenceRepository;
-import com.example.hrproject.Repositories.DiplomeRepository;
+import com.example.hrproject.Entities.*;
+import com.example.hrproject.Repositories.*;
 import com.example.hrproject.modals.CollabDTO;
 import com.example.hrproject.modals.CollabStatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -25,31 +21,42 @@ public class CollaborateurService {
 
     private final CompetenceRepository competenceRepository;
 
+    private final SalaireRepository salaireRepository;
+    private final PosteAPPRepository posteAppRepository;
+    private final PosteRepository posteRepository;
+
+
     public List<Collaborateur> getCollabs() {
         return collaborateursRepository.findAll();
     }
 
-    public CollabDTO getCollab(int id) {
+    public CollabDTO getCollab(Long id) {
         return CollabDTO.builder().collab(collaborateursRepository.findByMatricule(id))
                 .diplomes(diplomeRepository.findAllByCollaborateur_Matricule(id))
-                .competences(competenceRepository.findAllByCollaborateur_Matricule(id)).build();
+                .competences(competenceRepository.findAllByCollaborateur_Matricule(id))
+                .salaires(salaireRepository.findAllByCollaborateur_Matricule(id)).build();
     }
 
-    public List<Diplome> getDiplomes(int matricule) {
+    public List<Diplome> getDiplomes(Long matricule) {
         return diplomeRepository.findAllByCollaborateur_Matricule(matricule);
     }
 
-    public List<Competence> getComptences(int matricule) {
+    public List<Competence> getComptences(Long matricule) {
         return competenceRepository.findAllByCollaborateur_Matricule(matricule);
     }
 
     @Autowired
-    public CollaborateurService(CollaborateurRepository collaborateursRepository, DiplomeRepository diplomeRepository, CompetenceRepository competenceRepository) {
+    public CollaborateurService(CollaborateurRepository collaborateursRepository, DiplomeRepository diplomeRepository, CompetenceRepository competenceRepository
+            , SalaireRepository salaireRepository, PosteAPPRepository postAppRepository, PosteRepository postRepository) {
         this.collaborateursRepository = collaborateursRepository;
         this.diplomeRepository = diplomeRepository;
         this.competenceRepository = competenceRepository;
+        this.salaireRepository = salaireRepository;
+        this.posteAppRepository = postAppRepository;
+        this.posteRepository = postRepository;
     }
 
+    @Transactional
     public void saveCollab(CollabDTO newest) {
         Collaborateur collab = newest.getCollab();
         collab.removeDiplomes();
@@ -58,8 +65,19 @@ public class CollaborateurService {
         competenceRepository.deleteAll(collab.getCompetences());
         collab.addDiplomes(newest.getDiplomes());
         collab.addCompetences(newest.getCompetences());
+        collab.addSalaires(newest.getSalaires());
         collaborateursRepository.save(collab);
-        System.out.println("Saved :) ");
+    }
+
+
+    public List<Salaire> getSalaires(Long id) {
+        return salaireRepository.findAllByCollaborateur_Matricule(id);
+    }
+    public List<Poste> getPosts(Long id) {
+        return posteRepository.findAllByCollaborateur_Matricule(id);
+    }
+    public List<PosteAPP> getPostAPPs(Long id) {
+        return posteAppRepository.findAllByCollaborateur_Matricule(id);
     }
 
     @Autowired

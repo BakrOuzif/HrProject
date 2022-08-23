@@ -2,7 +2,6 @@ package com.example.hrproject.Services;
 
 import com.example.hrproject.Entities.Collaborateur;
 import com.example.hrproject.Repositories.CollaborateurRepository;
-import com.example.hrproject.modals.StatusDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +26,11 @@ public class ManagerRHService {
     public List<Collaborateur> getCollabsNonManagers() {
         return collaborateursRepository.getCollabsNonManagers();
     }
-    public List<Collaborateur> getCollabsofManager(int matriculeRH) {
+    public List<Collaborateur> getCollabsofManager(Long matriculeRH) {
         return collaborateursRepository.findCollaborateurByMatriculeRH(matriculeRH);
     }
 
-    public void saveCollabManager(int matricule, int matriculeRH) {
+    public void saveCollabManager(Long matricule, Long matriculeRH) {
         Collaborateur collab = collaborateursRepository.findByMatricule(matricule);
         Collaborateur manager = collaborateursRepository.findByMatricule(matriculeRH);
         collab.setMatriculeRH(matriculeRH);

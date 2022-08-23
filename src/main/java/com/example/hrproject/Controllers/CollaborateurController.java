@@ -7,6 +7,7 @@ import com.example.hrproject.modals.CollabStatusDTO;
 import com.example.hrproject.modals.Status;
 import com.example.hrproject.modals.StatusDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CollaborateurController {
     }
 
     @GetMapping("/getCollab/{id}")
-    public CollabDTO getCollab (@PathVariable int id){
+    public CollabDTO getCollab (@PathVariable Long id){
         return collaborateursService.getCollab(id);
     }
 
@@ -48,16 +49,16 @@ public class CollaborateurController {
     @PostMapping("/saveStatus")
     public String saveStatus (@RequestBody CollabStatusDTO status){
         collaborateursService.saveStatus(status);
-
         return new StatusDTO(Status.Saved).getStatus();
     }
 
     @PostMapping("/saveNewCollab")
     public String saveNewCollab (@RequestBody CollabDTO collabDTO){
         collaborateursService.saveCollab(collabDTO);
-
         System.out.println(collaborateursService.sendmail());
         return new StatusDTO(Status.Saved).getStatus();
     }
+
+
 
 }
