@@ -4,7 +4,9 @@
     justify-content: flex-start;
     border: 1px solid #231955;
     border-radius: 8px;
+    min-height: 50px;
     margin-bottom: 15px;
+    align-items: center;
 }
 
 .tlrh__list-tbody_icons {
@@ -217,4 +219,31 @@
 .toggle-checkbox {
     position: absolute;
     visibility: hidden;
+}
+
+.modal-body-stat{
+    margin-top: 5px;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-height: 500px;
+}
+.modal-body-stat_selection span{
+    width: 70%;
+}
+.modal-body-stat_selection {
+    padding: 0 2%;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 104px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+.modal-body-stat_selection:hover{
+    background: #06B6D4FF !important;
+    opacity: 80%;
 }

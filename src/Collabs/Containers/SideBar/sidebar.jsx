@@ -46,18 +46,18 @@ const Sidebar = () => {
                         <p>Collaborateurs</p>
                     </Link></div>)
                 }
-                {actif === 3 ? (<div id="tlrh__sidebar-links_active"><Link to="/">
+                {actif === 3 ? (<div id="tlrh__sidebar-links_active"><Link to="/manager">
                     <GrUserManager size={20}/>
                     <p>Manageurs RH</p>
                 </Link></div>):(<div onClick={()=>onClickF(3)}>
-                    <Link to="/">
+                    <Link to="/manager">
                         <GrUserManager size={20}/>
                         <p>Manageurs RH</p>
                     </Link></div>)
                 }
-                {actif === 4 ? (<div id="tlrh__sidebar-links_active"> <Link to="/"><HiOutlineDocumentReport size={20}/>
+                {actif === 4 ? (<div id="tlrh__sidebar-links_active"> <Link to="/reports"><HiOutlineDocumentReport size={20}/>
                     <p>Report</p>
-                </Link></div>) : (<div onClick={()=>onClickF(4)}> <Link to="/"><HiOutlineDocumentReport size={20}/>
+                </Link></div>) : (<div onClick={()=>onClickF(4)}> <Link to="/reports"><HiOutlineDocumentReport size={20}/>
                     <p>Report</p>
                 </Link>
                 </div>)

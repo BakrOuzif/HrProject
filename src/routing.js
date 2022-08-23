@@ -5,6 +5,10 @@ import CollabListPage from "./Collabs/CollabListPage";
 import CollabAddPage from "./Collabs/CollabAddPage";
 import CollabMListPage from "./ManagersRH/CollabListPage";
 import ManagerRHPage from "./ManagersRH/ManagerRHPage";
+import {Rapports, RatioFemininMasculin, Etudes, Technologie, Recrutement} from "./Reporting";
+import Salaire from "./Reporting/Components/Salaire";
+import PosteAPPEvolution from "./Reporting/Components/PosteAPPEvolution";
+import MatriceCompetence from "./Reporting/Components/MatriceCompetence";
 
 function Routing() {
 
@@ -27,11 +31,24 @@ function Routing() {
                         <Route path="/manager" key={"manager"}>
                             <ManagerRHPage/>
                         </Route>
+                        <Route exact path="/reports" key={"reports"}>
+                            <Rapports/>
+                        </Route>
+                        <Route path="/reports/recrutement" key={"reports/recrutement"}>
+                            <Recrutement/>
+                        </Route>
+
+                        <Route path="/reports/technologie"> <Technologie/></Route>
+                        <Route path="/reports/etudes"> <Etudes/></Route>
+                        <Route path="/reports/ratioFemininMasculin"><RatioFemininMasculin/></Route>
+                        <Route path="/reports/salaire"><Salaire/></Route>
+                        <Route path="/reports/posteApp"><PosteAPPEvolution/></Route>
+                        <Route path="/reports/competence"><MatriceCompetence/></Route>
                     </Switch>
                 </div>
             </div>
         </Router>
-    )
+)
 }
 
 export default Routing;

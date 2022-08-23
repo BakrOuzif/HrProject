@@ -14,7 +14,7 @@ const AddCollab = () => {
         nouveauRH: '',
         site: '',
         sexe: '',
-        salaire: '',
+        salaires: '',
         bu: '',
         embauche: '',
         seminaire: '',
@@ -22,19 +22,23 @@ const AddCollab = () => {
         poste: '',
         posteAPP: ''
     })
+    let url = 'saveNewCollab'
     const dateConverter = (str) => {
-        console.log("replaced :" + str.replace("undefined/",""))
+        console.log("replaced :" + str.replace("undefined/", ""))
         const [day, month, year] = str.split('/');
         return year + "-" + month + "-" + day
     }
     const reverseDateConverter = (str) => {
-        console.log("replaced :" + str.replace("undefined/",""))
+        console.log("replaced :" + str.replace("undefined/", ""))
         const [year, month, day] = str.split('-');
         console.log(day + "/" + month + "/" + year)
         return day + "/" + month + "/" + year
     }
+    const [salaires, setSalaires] = useState([])
+
     useEffect(() => {
         if (location.state !== undefined) {
+            url = 'saveCollab'
             if (location.state.collaborateur !== null && location.state.collaborateur !== undefined) {
                 console.log(location.state.collaborateur)
                 const requestOptions = {
@@ -54,6 +58,9 @@ const AddCollab = () => {
                     response.diplomes.forEach((dip) => {
                         dip.promotion = dateConverter(dip.promotion)
                     })
+                    setSalaires(response.salaires)
+                    response.collab.salaires = response.collab.salaires[response.collab.salaires.length - 1].salaire
+                    console.log(response.collab)
                     setCollab(response.collab)
                     setDiplome(response.diplomes)
                     setCompetence(response.competences)
@@ -62,6 +69,7 @@ const AddCollab = () => {
                 location.state.collaborateur = null
             }
         }
+
     })
     const [diplome, setDiplome] = useState([])
     const [competence, setCompetence] = useState([])
@@ -236,16 +244,23 @@ const AddCollab = () => {
         diplome.forEach((dip) => {
             dip.promotion = reverseDateConverter(dip.promotion)
         })
+        let sals = salaires.push(salairefinal)
+        setSalaires(sals)
+        let salairefinal = {
+            'dateSalaire' : new Date().toLocaleDateString(),
+            'salaire' : collab.salaires,
+        }
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 "collab": collab,
                 "competences": competences,
-                "diplomes": diplome
+                "diplomes": diplome,
+                "salaires": salaires,
             })
         };
-        fetch('http://localhost:8080/saveNewCollab', requestOptions)
+        fetch('http://localhost:8080/' + url, requestOptions)
             .then(response => response.json())
             .then(data => console.log(data));
     }

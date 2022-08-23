@@ -3,6 +3,7 @@ import React, {useState, useEffect, Fragment} from 'react';
 import './tbody.css';
 import {BsPencil} from "react-icons/bs";
 import {FiTrash2} from "react-icons/fi";
+import {useHistory} from "react-router-dom";
 
 
 const Tbody = (props) => {
@@ -19,9 +20,7 @@ const Tbody = (props) => {
         if (managerExists) {
             addManager();
         }
-
     })
-
 
     const searchCollabs = async () => {
         let response;
@@ -31,9 +30,8 @@ const Tbody = (props) => {
         } else {
             response = await fetch('http://localhost:8080/getManagers')
         }
-        const data = await response.json()
+        const data = await response.json().then(data => setCollabs(data))
         setCollabsExists(true);
-        setCollabs(data);
     }
 
 
@@ -130,7 +128,7 @@ const Tbody = (props) => {
                 </div>)
             }
         ),
-        <Modal matriculeRH={manager}/>
+        <Modal matriculeRH={manager}/>,
     ]
 }
 export default Tbody
@@ -217,6 +215,7 @@ const Modal = (props) => {
                     </div>
                 </div>
             </div>
+
         </Fragment>
     )
 }
